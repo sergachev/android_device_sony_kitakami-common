@@ -24,8 +24,8 @@
     "revision": "cm-14.1"
   },
   {
-    "remote": "lineage",
-    "repository": "LineageOS/android_kernel_sony_msm8994",
+    "remote": "gh",
+    "repository": "olefb/android_kernel_sony_msm8994/",
     "target_path": "kernel/sony/msm8994",
     "revision": "cm-14.1"
   }
