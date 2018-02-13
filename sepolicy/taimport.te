@@ -1,4 +1,4 @@
-type taimport, domain, domain_deprecated;
+type taimport, domain;
 type taimport_exec, exec_type, file_type;
 
 # Started by init

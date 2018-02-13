@@ -1,4 +1,4 @@
-type secd, domain, domain_deprecated;
+type secd, domain;
 type secd_exec, exec_type, file_type;
 
 # Started by init
