@@ -1,26 +1,28 @@
-allow system_server self:capability sys_module;
+allow system_server self:socket ioctl;
+allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
 
-# Access to sensors socket
-unix_socket_connect(system_server, sensors, sensors)
-unix_socket_send(system_server, sensors, sensors)
-allow system_server sensors:unix_stream_socket sendto;
-allow system_server sensors_socket:sock_file r_file_perms;
-qmux_socket(system_server);
+binder_call(system_server, hal_camera_default)
 
-#Allow access to netmgrd socket
-netmgr_socket(system_server);
+# input files
+r_dir_file(system_server, idc_file)
+r_dir_file(system_server, keylayout_file)
 
-#Rules for system server to talk to peripheral manager
-use_per_mgr(system_server);
+# Allow system_server to write to /proc/<pid>/timerslack_ns
+allow system_server appdomain:file w_file_perms;
+allow system_server audioserver:file w_file_perms;
+allow system_server hal_audio_default:file w_file_perms;
 
-allow system_server system_app_data_file:dir r_dir_perms;
+allow system_server netmgrd_socket:dir r_dir_perms;
+unix_socket_connect(system_server, netmgrd, netmgrd)
+allow system_server self:socket ioctl;
+allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
 
-r_dir_file(system_server, sysfs_addrsetup)
+# radio
+rw_dir_file(system_server, qmuxd_socket)
+allow system_server qmuxd_socket:sock_file { create unlink };
+unix_socket_connect(system_server, qmuxd, qmuxd)
 
-allow system_server ta_data_file:dir search;
-allow system_server ta_data_file:file r_file_perms;
-allow system_server persist_file:dir rw_file_perms;
-
-
-
-
+# xtra
+allow system_server location_data_file:sock_file write;
+allow system_server location_data_file:dir search;
+allow system_server location:unix_stream_socket connectto;

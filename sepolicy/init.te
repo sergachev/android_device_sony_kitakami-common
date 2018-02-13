@@ -1,22 +1,15 @@
-#For sdcard
-allow init tmpfs:lnk_file create_file_perms;
+# symlink /sdcard to backing block
+allow init tmpfs:lnk_file create;
+allow init configfs:file rw_file_perms;
+allow init configfs:lnk_file { create unlink };
 
-allow init proc_kernel_sched:file write;
-allow init proc_dirty_ratio:file write;
+allow init { persist_file qdsp_file }:dir mounton;
 
-allow init persist_file:dir mounton;
-allow init debugfs:file w_file_perms;
+dontaudit init kernel:system module_request;
 
-#FM BCM
-allow init hci_attach_dev:chr_file rw_file_perms;
-allow init brcm_uim_exec:file { execute getattr read open };
-allow init brcm_ldisc_sysfs:lnk_file { read };
-allow init uim:process { siginh noatsecure transition rlimitinh };
+#Allow triggering IPA FWs loading
+allow init ipa_dev:chr_file write;
 
-#TAD
-allow init tad_socket:sock_file create;
-
-#Torch
-allow init sysfs_camera_torch:lnk_file read;
-
-allow init trim_area_partition_device:blk_file { write setattr };
+# init_power.te
+allow init sysfs_devices_system_cpu:dir w_dir_perms;
+allow init sysfs_devices_system_cpu:file w_file_perms;

@@ -1,5 +1,10 @@
-allow system_app timekeep_prop:file { read getattr open };
-allow system_app timekeep_prop:property_service set;
-allow system_app time_data_file:dir { search write add_name } ;
-allow system_app time_data_file:file { read write open getattr create };
+# SELinux status
+r_dir_file(system_app, selinuxfs)
 
+# ExtendedSettings props
+rw_dir_file(system_app, sysfs_pcc_profile)
+
+# TimeKeep Java service
+allow system_app timekeep_vendor_data_file:dir create_dir_perms;
+allow system_app timekeep_vendor_data_file:file create_file_perms;
+set_prop(system_app, timekeep_prop)
