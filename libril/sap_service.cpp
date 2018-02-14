@@ -775,13 +775,6 @@ void processResponse(MsgHeader *rsp, RilSapSocket *sapSocket, MsgType msgType) {
         return;
     }
 
-    if (messagePtr == NULL) {
-        RLOGE("processResponse: *messagePtr == NULL; msgId = %d; msgType = %d",
-                msgId, msgType);
-        sapImpl->sendFailedResponse(msgId, rsp->token, 0);
-        return;
-    }
-
     RLOGD("processResponse: sapCallback != NULL; msgId = %d; msgType = %d",
             msgId, msgType);
 
@@ -921,7 +914,7 @@ void sap::processUnsolResponse(MsgHeader *rsp, RilSapSocket *sapSocket) {
     processResponse(rsp, sapSocket, MsgType_UNSOL_RESPONSE);
 }
 
-void sap::registerService(const RIL_RadioFunctions *callbacks) {
+void sap::registerService(RIL_RadioFunctions *callbacks) {
     using namespace android::hardware;
     int simCount = 1;
     const char *serviceNames[] = {
