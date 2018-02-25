@@ -27,6 +27,6 @@
     "remote": "gh",
     "repository": "sergachev/android_kernel_sony_msm8994/",
     "target_path": "kernel/sony/msm8994",
-    "revision": "cr-6.0"
+    "revision": "master"
   }
 ]
